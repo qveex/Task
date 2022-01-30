@@ -35,6 +35,8 @@ fun parseSMS(str: String, maxSMSLength: Int): Array<String> {
     val words = str.split(' ')
     val messages = ArrayList<String>()
 
+    if (maxSMSLength <= 0 || str == "") return emptyArray()
+
     var curSize = -1
     var lastSize = 0
 
@@ -125,6 +127,8 @@ fun main() {
     parseSMS("раздва дватри тричет", 10).forEach { println(it) }.also { println() }
     parseSMS("раз два три", 9).forEach { println(it) }.also { println() }
     parseSMS("раз два три", 11).forEach { println(it) }.also { println() }
+    parseSMS("раз два три", -1).forEach { println(it) }.also { println() }
+    parseSMS("", 5).forEach { println(it) }.also { println() }
     parseSMS("Сейчас я попытаюсь придумать интересные предложения для тестирования", 16).forEach { println(it) }.also { println() }
     parseSMS("Два раза в день я хожу на улицу, чтобы подышать свежим морозным воздухом, а сразу после этого я обычно наливаю себе крепкий армотный чай с жасмином, который быстро согревает и создает в душе уют и покой.", 15).forEach { println(it) }.also { println() }
     parseSMS("Два раза в день я хожу на улицу, чтобы подышать свежим морозным воздухом, а сразу после этого я обычно наливаю себе крепкий армотный чай с жасмином, который быстро согревает и создает в душе уют и покой.", 22).forEach { println(it) }.also { println() }
