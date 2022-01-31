@@ -36,6 +36,7 @@ fun parseSMS(str: String, maxSMSLength: Int): Array<String> {
     val messages = ArrayList<String>()
 
     if (maxSMSLength <= 0 || str == "") return emptyArray()
+    if (str.length <= maxSMSLength) return  arrayOf(str)
 
     var curSize = -1
     var lastSize = 0
@@ -53,15 +54,13 @@ fun parseSMS(str: String, maxSMSLength: Int): Array<String> {
             val suff = if (curSize == -1) "${lineCount + 1}/${lineCount + 1}" else "${lineCount + 1}/${curSize + 1}"
 
             if ((possibleMsg + suff).length + 1 > maxSMSLength) {
-                if (!(word == words.last() && messages.size == 1 && possibleMsg.length <= maxSMSLength)) {
-                    messages[lineCount++] += suff
-                    messages.add("")
-                }
+                messages[lineCount++] += suff
+                messages.add("")
             }
 
             messages[lineCount] += "$word "
 
-            if (word == words.last() && messages.size > 1) {
+            if (word === words.last() && messages.size > 1) {
                 val lastSuff = if (curSize == -1) "${lineCount + 1}/${lineCount + 1}" else "${lineCount + 1}/${curSize + 1}"
                 messages[lineCount] += lastSuff
             }
@@ -135,6 +134,7 @@ fun main() {
     parseSMS("Два раза в день я хожу на улицу, чтобы подышать свежим морозным воздухом, а сразу после этого я обычно наливаю себе крепкий армотный чай с жасмином, который быстро согревает и создает в душе уют и покой.", 64).forEach { println(it) }.also { println() }
     parseSMS("Сегодня шёл дождь", 255).forEach { println(it) }.also { println() }
     parseSMS("Сообщение", 9).forEach { println(it) }.also { println() }
+    parseSMS("Повседневная практика показывает, что реализация намеченных плановых заданий в значительной степени обуславливает создание модели развития. Идейные соображения высшего порядка, а также дальнейшее развитие различных форм деятельности позволяет оценить значение новых предложений. С другой стороны рамки и место обучения кадров способствует подготовки и реализации модели развития.", 19).forEach { println(it) }.also { println() }
     parseSMS("Я надеюсь, алгоритм работает верно, ведь создать тестовые данные для его проверки достаточно трудно, и мне приходится ограничиваться вот этим", 20).forEach { println(it) }.also { println() }
     parseSMS("Четыре года я ждал ее у озера, но она так и не вернулась", 13).forEach { println(it) }.also { println() }
     parseSMS("Александр смотрел на то, как ловко тот парень поднимал невероятно большой вес от своей груди, и мечтал, что когда-нибудь он достигнет таких же высот", 18).forEach { println(it) }.also { println() }
